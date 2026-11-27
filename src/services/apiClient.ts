@@ -16,7 +16,7 @@ export class ApiError extends Error {
 }
 
 let onUnauthorized: (() => void) | null = null;
-export const setOnUnauthorized = (callback: () => void) => {
+export const setOnUnauthorized = (callback: (() => void) | null) => {
     onUnauthorized = callback;
 };
 

@@ -1,7 +1,7 @@
 import { useEffect, useState, type ReactNode } from 'react';
 import * as SecureStore from 'expo-secure-store';
 
-import { TOKEN_KEY } from '@/services/apiClient';
+import { TOKEN_KEY, setOnUnauthorized } from '@/services/apiClient';
 import { isClientTokenValid } from '@/utils/auth';
 import { AuthenticationContext } from './AuthenticationContext';
 
@@ -14,6 +14,9 @@ export default function AuthenticationContextProvider({ children }: Props) {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    setOnUnauthorized(() => {
+      setToken(null);
+    });
     const restoreSession = async () => {
       try {
         const savedToken = await SecureStore.getItemAsync(TOKEN_KEY);
@@ -31,6 +34,10 @@ export default function AuthenticationContextProvider({ children }: Props) {
     };
 
     void restoreSession();
+    return () => {
+      setOnUnauthorized(null);
+    };
+
   }, []);
 
   const handleUserLogin = async (newToken: string): Promise<boolean> => {
