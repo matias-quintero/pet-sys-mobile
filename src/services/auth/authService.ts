@@ -1,5 +1,4 @@
-import * as SecureStore from 'expo-secure-store';
-import { apiFetch, TOKEN_KEY }  from '../apiClient'; 
+import { apiFetch } from '../apiClient';
 import type { IUserResponse } from '../users/IUser';
 import type { ILoginRequest } from './IAuth';
 
@@ -15,7 +14,6 @@ export const HandleLogin = async (loginRequest: ILoginRequest) => {
         throw new Error('La API devolvió un token vacío.');
     }
 
-    await SecureStore.setItemAsync(TOKEN_KEY, token);
     return { token };
 };
 
