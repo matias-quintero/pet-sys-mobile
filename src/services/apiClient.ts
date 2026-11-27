@@ -3,7 +3,7 @@ import { translateApiError } from './apiErrors';
 
 export const TOKEN_KEY = 'pet-sys-token';
 
-const API_URL = process.env.EXPO_PUBLIC_API_URL ?? 'https://TU-BACK.azurewebsites.net/api';
+const API_URL = process.env.EXPO_PUBLIC_API_URL ?? 'https://localhost:7140/api';
 const LOGIN_PATH = '/Authentication/authenticate';
 
 export class ApiError extends Error {
@@ -16,7 +16,7 @@ export class ApiError extends Error {
 }
 
 let onUnauthorized: (() => void) | null = null;
-export const setOnUnauthorized = (callback: () => void) => {
+export const setOnUnauthorized = (callback: (() => void) | null) => {
     onUnauthorized = callback;
 };
 
